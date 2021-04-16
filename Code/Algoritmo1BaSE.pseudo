@@ -1,0 +1,30 @@
+Input: 
+    $ \Glspl{arm} $ $ \mathcal{I} = [K] $;
+    orizzonte temporale $ T $;
+    numero di $ \glspl{batch} $ $ M $;
+    $ \gls{grid} $ $ T = \left\{t_{1} , \ldots , t_{M} \right\} $;
+    parametro di $ \emph{tuning} $ $ \gamma $.
+
+Inizializzazione:
+    $ \mathcal{A} \leftarrow \mathcal{I} $.
+
+Algoritmo:
+    for $ m \leftarrow 1 $ to $ M - 1 $ do
+        (a) Durante il periodo $ [t_{m - 1} + 1, t_{m}] $, tirare un
+            $ \gls{arm} $ da $ \mathcal{A} $ lo stesso numero di volte.
+        (b) Al tempo $ t_{m} $:
+        Sia $ \bar{Y}^{\max}(t_{m}) = \max_{j \in \mathcal{A}} \bar{Y}^{j}(t_{m}) $, e $ \tau_{m} $ sia il numero
+            totale di tirate di ciascuno degli $ \gls{arm} $ in $ \mathcal{A} $.
+        for $ i \in \mathcal{A} $ do
+            if $ \bar{Y}^{\operatorname{max}}(t_{m}) - \bar{Y}^{i}(t_{m}) \geq \sqrt{\gamma \log{TK}/ \tau_{m}} $ then
+                $ \mathcal{A} \leftarrow \mathcal{A} - \left\{i\right\} $.
+            end
+        end
+    end
+    for $ t \leftarrow t_{M - 1} + 1 $ to $ T $ do
+        tirare $ \text{l'}\gls{arm} $ $ i_{0} $ tale che $ i_{0} \in \arg\max_{j \in \mathcal{A}} \bar{Y}^{j}(t_{M-1}) $
+            (rompere arbitrariamente i legami).
+    end
+
+Output:
+    $ \emph{policy} $ risultante $ \pi $.
